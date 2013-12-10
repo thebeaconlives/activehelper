@@ -35,7 +35,7 @@ class Activehelper {
 	* @return string
 	*/
 
-	public function link($routes, $url, $value = '', $attributes = array('class' => 'active'))
+	public function link($routes, $url, $value = '', $attributes = array())
 	{
 		if(empty($value))
 		{
@@ -46,8 +46,20 @@ class Activehelper {
 
 		if($this->is($routes))
 		{
-			$output.= $this->putAttributes($attributes);
+			if (array_key_exists('class', $attributes))
+			{
+				if (strpos($attributes['class'], 'active') === false)
+				{
+					$attributes['class'] .= ' active';
+				}
+			} 
+			else
+			{
+				$attributes['class'] = 'active';
+			}
 		}
+		
+		$output.= $this->putAttributes($attributes);
 
 		$output.= '>'.$value.'</a>';
 
